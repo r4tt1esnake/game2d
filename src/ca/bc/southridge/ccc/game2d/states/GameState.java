@@ -2,26 +2,24 @@ package ca.bc.southridge.ccc.game2d.states;
 
 import java.awt.Graphics;
 
-import ca.bc.southridge.ccc.game2d.Game;
-import ca.bc.southridge.ccc.game2d.gfx.Assets;
+import ca.bc.southridge.ccc.game2d.entities.creatures.Player;
 
 public class GameState extends State {
 	
-	int x = 0;
+	private Player player;
 	
 	public GameState() {
-		
+		player = new Player(100, 100);
 	}
 
 	@Override
 	public void tick() {
-		x++;
+		player.tick();
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.icon, x, 0, null);
-		g.drawImage(Assets.icon, Game.WIDTH - x, 0, null);
+		player.render(g);
 	}
 
 }
