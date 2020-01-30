@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import ca.bc.southridge.ccc.game2d.display.Display;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 import ca.bc.southridge.ccc.game2d.states.GameState;
+import ca.bc.southridge.ccc.game2d.states.MenuState;
 import ca.bc.southridge.ccc.game2d.states.State;
 
 public class Game implements Runnable {
@@ -27,6 +28,7 @@ public class Game implements Runnable {
 	
 	// States
 	private State gameState;
+	private State menuState;
 	
 	public Game() {
 		running = false;
@@ -37,6 +39,7 @@ public class Game implements Runnable {
 		display = new Display(TITLE, WIDTH, HEIGHT);
 		
 		gameState = new GameState();
+		menuState = new MenuState();
 		State.setState(gameState);
 	}
 	
