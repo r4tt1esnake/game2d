@@ -14,7 +14,8 @@ public class Game implements Runnable {
 	public static final String TITLE = "Game2D";
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 800;
-	public static final int BAR_HEIGHT = 40;
+	public static final int FPS = 60;
+	
 	
 	private Display display;
 	
@@ -80,8 +81,7 @@ public class Game implements Runnable {
 		init();
 		
 		// Fps limiter
-		int fps = 60;
-		double timePerTick = 1000000000 / fps;
+		double timePerTick = 1000000000 / FPS;
 		double delta = 0;
 		long now;
 		long lastTime = System.nanoTime();
