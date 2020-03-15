@@ -31,6 +31,8 @@ public class Display {
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setMaximumSize(new Dimension(width, height));
 		canvas.setMinimumSize(new Dimension(width, height));
+		// Very important! This essentially makes it so that the JFrame is the only thing that can have focus.
+		canvas.setFocusable(false);
 		
 		frame.add(canvas);
 		frame.pack();
@@ -40,6 +42,10 @@ public class Display {
 	// Getter method for our drawer, canvas.
 	public Canvas getCanvas() {
 		return canvas;
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

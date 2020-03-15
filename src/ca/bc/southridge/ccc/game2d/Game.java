@@ -6,17 +6,17 @@ import java.awt.image.BufferStrategy;
 
 import ca.bc.southridge.ccc.game2d.display.Display;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
+import ca.bc.southridge.ccc.game2d.input.KeyManager;
 import ca.bc.southridge.ccc.game2d.states.GameState;
 import ca.bc.southridge.ccc.game2d.states.MenuState;
 import ca.bc.southridge.ccc.game2d.states.State;
 
 public class Game implements Runnable {
 	
-	public static final String TITLE = "Game2D";
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
+	public static final String TITLE = "game2D";
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 600;
 	public static final int FPS = 60;
-	
 	
 	private Display display;
 	
@@ -31,22 +31,27 @@ public class Game implements Runnable {
 	private State gameState;
 	private State menuState;
 	
+	// Input
+	private KeyManager keyManager;
+	
 	public Game() {
 		running = false;
+		keyManager = new KeyManager();
 	}
 	
 	private void init() {
 		Assets.init();
-		display = new Display(TITLE, WIDTH, HEIGHT);
+		display = new Display(TITLE + " - Southridge CCC", WIDTH, HEIGHT);
+		display.getFrame().addKeyListener(keyManager);
 		
-		gameState = new GameState();
-		menuState = new MenuState();
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
 		State.setState(gameState);
 	}
 	
-	
 	// Update all variables here.
 	private void tick() {
+		keyManager.tick();
 		
 		// Errorcheck for null states.
 		if(State.getState() != null)
@@ -65,7 +70,7 @@ public class Game implements Runnable {
 		g = bs.getDrawGraphics();
 		
 		// Clears the screen.
-		g.setColor(new Color(0, 0, 32));
+		g.setColor(new Color(255, 255, 255));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		// Draw here!
@@ -113,6 +118,10 @@ public class Game implements Runnable {
 				timer = 0;
 			}
 		}
+	}
+	
+	public KeyManager getKeyManager() {
+		return keyManager;
 	}
 	
 	public synchronized void start() {
