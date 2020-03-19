@@ -1,4 +1,4 @@
-package ca.bc.southridge.ccc.game2d.math;
+package ca.bc.southridge.ccc.game2d.utils;
 
 public class MathLib {
 	

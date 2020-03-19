@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import ca.bc.southridge.ccc.game2d.Game;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
-import ca.bc.southridge.ccc.game2d.math.Vector;
+import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public class Player extends Creature {
 	

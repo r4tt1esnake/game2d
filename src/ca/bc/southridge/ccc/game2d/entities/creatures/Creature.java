@@ -1,7 +1,7 @@
 package ca.bc.southridge.ccc.game2d.entities.creatures;
 
 import ca.bc.southridge.ccc.game2d.entities.Entity;
-import ca.bc.southridge.ccc.game2d.math.Vector;
+import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public abstract class Creature extends Entity {
 	

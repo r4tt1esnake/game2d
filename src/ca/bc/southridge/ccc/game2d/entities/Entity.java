@@ -2,7 +2,7 @@ package ca.bc.southridge.ccc.game2d.entities;
 
 import java.awt.Graphics;
 
-import ca.bc.southridge.ccc.game2d.math.Vector;
+import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public abstract class Entity {
 	

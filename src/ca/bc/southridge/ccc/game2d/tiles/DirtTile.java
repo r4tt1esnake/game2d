@@ -2,10 +2,10 @@ package ca.bc.southridge.ccc.game2d.tiles;
 
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 
-public class GrassTile extends Tile {
+public class DirtTile extends Tile {
 	
-	public GrassTile(int id) {
-		super(Assets.grass, id);
+	public DirtTile(int id) {
+		super(Assets.dirt, id);
 	}
 
 }
