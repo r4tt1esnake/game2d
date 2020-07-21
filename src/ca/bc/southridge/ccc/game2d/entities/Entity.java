@@ -1,19 +1,26 @@
 package ca.bc.southridge.ccc.game2d.entities;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
+import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public abstract class Entity {
 	
+	protected Handler handler;
 	// Float is used here to ensure smooth movement.
 	protected Vector position;
 	protected int width, height;
+	protected Rectangle bounds;
 	
-	public Entity(float x, float y, int width, int height) {
+	public Entity(Handler handler, float x, float y, int width, int height) {
+		this.handler = handler;
 		position = new Vector(x, y);
 		this.width = width;
 		this.height = height;
+		
+		bounds = new Rectangle(0, 0, width, height);
 	}
 	
 	public Vector getPosition() {

@@ -2,12 +2,12 @@ package ca.bc.southridge.ccc.game2d.states;
 
 import java.awt.Graphics;
 
-import ca.bc.southridge.ccc.game2d.Game;
+import ca.bc.southridge.ccc.game2d.Handler;
 
 public class MenuState extends State {
 	
-	public MenuState(Game game) {
-		super(game);
+	public MenuState(Handler handler) {
+		super(handler);
 	}
 
 	@Override

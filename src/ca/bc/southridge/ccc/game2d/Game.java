@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 
 import ca.bc.southridge.ccc.game2d.display.Display;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
+import ca.bc.southridge.ccc.game2d.gfx.GameCamera;
 import ca.bc.southridge.ccc.game2d.input.KeyManager;
 import ca.bc.southridge.ccc.game2d.states.GameState;
 import ca.bc.southridge.ccc.game2d.states.MenuState;
@@ -17,6 +18,8 @@ public class Game implements Runnable {
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 600;
 	public static final int FPS = 60;
+	
+	public static final boolean DEBUG = true;
 	
 	private Display display;
 	
@@ -34,6 +37,12 @@ public class Game implements Runnable {
 	// Input
 	private KeyManager keyManager;
 	
+	// Camera
+	private GameCamera gameCamera;
+	
+	// Handler
+	private Handler handler;
+	
 	public Game() {
 		running = false;
 		keyManager = new KeyManager();
@@ -44,8 +53,11 @@ public class Game implements Runnable {
 		display = new Display(TITLE + " - Southridge CCC", WIDTH, HEIGHT);
 		display.getFrame().addKeyListener(keyManager);
 		
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+		handler = new Handler(this);
+		gameCamera = new GameCamera(handler, 0, 0);
+		
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
 		State.setState(gameState);
 	}
 	
@@ -64,7 +76,7 @@ public class Game implements Runnable {
 		
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs == null) {
-			display.getCanvas().createBufferStrategy(3);
+			display.getCanvas().createBufferStrategy(2);
 			return;
 		}
 		g = bs.getDrawGraphics();
@@ -88,7 +100,7 @@ public class Game implements Runnable {
 	public void run() {
 		init();
 		
-		// Fps limiter
+		// FPS limiter
 		double timePerTick = 1000000000 / FPS;
 		double delta = 0;
 		long now;
@@ -113,7 +125,8 @@ public class Game implements Runnable {
 			
 			// Our FPS counter. We can implement a graphical one in the future!
 			if(timer >= 1000000000) {
-				System.out.println("Ticks and frames: " + ticks);
+				if(Game.DEBUG)
+					System.out.println("Ticks and frames: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}
@@ -122,6 +135,10 @@ public class Game implements Runnable {
 	
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+	
+	public GameCamera getGameCamera() {
+		return gameCamera;
 	}
 	
 	public synchronized void start() {

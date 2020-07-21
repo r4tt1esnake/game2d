@@ -2,9 +2,8 @@ package ca.bc.southridge.ccc.game2d.states;
 
 import java.awt.Graphics;
 
-import ca.bc.southridge.ccc.game2d.Game;
+import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.creatures.Player;
-import ca.bc.southridge.ccc.game2d.tiles.Tile;
 import ca.bc.southridge.ccc.game2d.worlds.World;
 
 public class GameState extends State {
@@ -12,10 +11,11 @@ public class GameState extends State {
 	private Player player;
 	private World world;
 	
-	public GameState(Game game) {
-		super(game);
-		player = new Player(game, 100, 100);
-		world = new World("");
+	public GameState(Handler handler) {
+		super(handler);
+		world = new World(handler, "res/worlds/world1.txt");
+		handler.setWorld(world);
+		player = new Player(handler, 128, 128);
 	}
 
 	@Override

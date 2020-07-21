@@ -3,6 +3,7 @@ package ca.bc.southridge.ccc.game2d.states;
 import java.awt.Graphics;
 
 import ca.bc.southridge.ccc.game2d.Game;
+import ca.bc.southridge.ccc.game2d.Handler;
 
 public abstract class State {
 	
@@ -16,10 +17,10 @@ public abstract class State {
 		return currentState;
 	}
 	
-	protected Game game;
+	protected Handler handler;
 	
-	public State(Game game) {
-		this.game = game;
+	public State(Handler handler) {
+		this.handler = handler;
 	}
 	
 	public abstract void tick();
