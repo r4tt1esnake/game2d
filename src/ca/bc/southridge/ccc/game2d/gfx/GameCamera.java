@@ -2,7 +2,7 @@ package ca.bc.southridge.ccc.game2d.gfx;
 
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.Entity;
-import ca.bc.southridge.ccc.game2d.tiles.Tile;
+import ca.bc.southridge.ccc.game2d.utils.Constants;
 
 public class GameCamera {
 	
@@ -16,16 +16,25 @@ public class GameCamera {
 	}
 	
 	public void checkBlankSpace() {
-		if(xOffset < 0) {
-			xOffset = 0;
-		} else if(xOffset > handler.getWorld().getWidth() * Tile.WIDTH - handler.getWidth()) {
-			xOffset = handler.getWorld().getWidth() * Tile.WIDTH - handler.getWidth();
+		
+		if(handler.getWidth() < handler.getWorld().getWidth()) {
+			if (xOffset < 0) {
+				xOffset = 0;
+			} else if (xOffset > handler.getWorld().getWidth() * Constants.TILE_WIDTH - handler.getWidth()) {
+				xOffset = handler.getWorld().getWidth() * Constants.TILE_WIDTH - handler.getWidth();
+			}
+		} else {
+			xOffset = -(handler.getWidth() - handler.getWorld().getWidth() * Constants.TILE_WIDTH) / 2;
 		}
 		
-		if(yOffset < 0) {
-			yOffset = 0;
-		} else if(yOffset > handler.getWorld().getHeight() * Tile.HEIGHT - handler.getHeight()) {
-			xOffset = handler.getWorld().getHeight() * Tile.HEIGHT - handler.getHeight();
+		if(handler.getHeight() < handler.getWorld().getHeight()) {
+			if (yOffset < 0) {
+				yOffset = 0;
+			} else if (yOffset > handler.getWorld().getHeight() * Constants.TILE_HEIGHT - handler.getHeight()) {
+				yOffset = handler.getWorld().getHeight() * Constants.TILE_HEIGHT - handler.getHeight();
+			} 
+		} else {
+			yOffset = -(handler.getHeight() - handler.getWorld().getHeight() * Constants.TILE_HEIGHT) / 2;
 		}
 	}
 	

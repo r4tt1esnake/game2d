@@ -3,18 +3,23 @@ package ca.bc.southridge.ccc.game2d.utils;
 public class Vector {
 	
 	private float x, y;
+	private MathLib.Direction persistDir;
 	
 	public Vector(float x, float y) {
 		this.x = x; 
 		this.y = y;
+		persistDir = MathLib.Direction.S;
+		persistDir = getDir();
 	}
 	
 	public void addX(float x) {
 		this.x += x;
+		persistDir = getDir();
 	}
 	
 	public void addY(float y) {
 		this.y += y;
+		persistDir = getDir();
 	}
 	
 	public void zero() {
@@ -46,6 +51,35 @@ public class Vector {
 	
 	public void setY(float y) {
 		this.y = y;
+	}
+	
+	public MathLib.Direction getDir() {
+		if(x > 0) {
+			if(y > 0) 
+				return MathLib.Direction.SE;
+			else if(y < 0)
+				return MathLib.Direction.NE;
+			else
+				return MathLib.Direction.E;
+		} else if (x < 0) {
+			if(y > 0) 
+				return MathLib.Direction.SW;
+			else if(y < 0)
+				return MathLib.Direction.NW;
+			else
+				return MathLib.Direction.W;
+		} else {
+			if(y > 0)
+				return MathLib.Direction.S;
+			else if(y < 0)
+				return MathLib.Direction.N;
+			else
+				return persistDir;
+		}
+	}
+	
+	public boolean isZero() {
+		return (x == 0 && y == 0);
 	}
 
 }

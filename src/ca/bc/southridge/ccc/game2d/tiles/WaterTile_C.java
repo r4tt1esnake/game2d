@@ -2,10 +2,10 @@ package ca.bc.southridge.ccc.game2d.tiles;
 
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 
-public class StoneTile extends Tile {
+public class WaterTile_C extends Tile {
 	
-	public StoneTile(int id) {
-		super(Assets.stone, id);
+	public WaterTile_C(int id) {
+		super(Assets.water_c, id);
 	}
 	
 	@Override

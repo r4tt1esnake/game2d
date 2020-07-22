@@ -1,7 +1,10 @@
 package ca.bc.southridge.ccc.game2d;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferStrategy;
 
 import ca.bc.southridge.ccc.game2d.display.Display;
@@ -11,15 +14,9 @@ import ca.bc.southridge.ccc.game2d.input.KeyManager;
 import ca.bc.southridge.ccc.game2d.states.GameState;
 import ca.bc.southridge.ccc.game2d.states.MenuState;
 import ca.bc.southridge.ccc.game2d.states.State;
+import ca.bc.southridge.ccc.game2d.utils.Constants;
 
 public class Game implements Runnable {
-	
-	public static final String TITLE = "game2D";
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 600;
-	public static final int FPS = 60;
-	
-	public static final boolean DEBUG = true;
 	
 	private Display display;
 	
@@ -50,7 +47,7 @@ public class Game implements Runnable {
 	
 	private void init() {
 		Assets.init();
-		display = new Display(TITLE + " - Southridge CCC", WIDTH, HEIGHT);
+		display = new Display(Constants.WINDOW_TITLE + " - Southridge CCC", Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		display.getFrame().addKeyListener(keyManager);
 		
 		handler = new Handler(this);
@@ -73,7 +70,6 @@ public class Game implements Runnable {
 	
 	// Do the rendering (drawing) here.
 	private void render() {
-		
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs == null) {
 			display.getCanvas().createBufferStrategy(2);
@@ -82,8 +78,8 @@ public class Game implements Runnable {
 		g = bs.getDrawGraphics();
 		
 		// Clears the screen.
-		g.setColor(new Color(255, 255, 255));
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(new Color(0, 0, 0));
+		g.fillRect(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		
 		// Draw here!
 		
@@ -101,7 +97,7 @@ public class Game implements Runnable {
 		init();
 		
 		// FPS limiter
-		double timePerTick = 1000000000 / FPS;
+		double timePerTick = 1000000000 / Constants.GAME_FPS;
 		double delta = 0;
 		long now;
 		long lastTime = System.nanoTime();
@@ -125,7 +121,7 @@ public class Game implements Runnable {
 			
 			// Our FPS counter. We can implement a graphical one in the future!
 			if(timer >= 1000000000) {
-				if(Game.DEBUG)
+				if(Constants.DEBUG)
 					System.out.println("Ticks and frames: " + ticks);
 				ticks = 0;
 				timer = 0;

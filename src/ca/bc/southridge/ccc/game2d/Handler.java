@@ -2,6 +2,7 @@ package ca.bc.southridge.ccc.game2d;
 
 import ca.bc.southridge.ccc.game2d.gfx.GameCamera;
 import ca.bc.southridge.ccc.game2d.input.KeyManager;
+import ca.bc.southridge.ccc.game2d.utils.Constants;
 import ca.bc.southridge.ccc.game2d.worlds.World;
 
 public class Handler {
@@ -22,11 +23,11 @@ public class Handler {
 	}
 	
 	public int getWidth() {
-		return game.WIDTH;
+		return Constants.WINDOW_WIDTH;
 	}
 	
 	public int getHeight() {
-		return game.HEIGHT;
+		return Constants.WINDOW_HEIGHT;
 	}
 
 	public Game getGame() {

@@ -1,16 +1,13 @@
 package ca.bc.southridge.ccc.game2d.entities.creatures;
 
+import java.awt.Graphics;
+
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.Entity;
-import ca.bc.southridge.ccc.game2d.tiles.Tile;
+import ca.bc.southridge.ccc.game2d.utils.Constants;
 import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public abstract class Creature extends Entity {
-	
-	public static final int HEALTH = 10;
-	public static final float SPEED = 2.0f;
-	public static final int WIDTH = 64, 
-			HEIGHT = 64;
 	
 	protected double health;
 	protected float speed;
@@ -18,8 +15,8 @@ public abstract class Creature extends Entity {
 
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
-		health = HEALTH;
-		speed = SPEED;
+		health = Constants.CREATURE_HEALTH;
+		speed = Constants.CREATURE_SPEED;
 		movement = new Vector(0, 0);
 	}
 	
@@ -31,22 +28,22 @@ public abstract class Creature extends Entity {
 	public void moveX() {
 		// Moving right
 		if(movement.getX() > 0) {
-			int tx = (int) (position.getX() + movement.getX() + bounds.x + bounds.width) / Tile.WIDTH;
-			if(!collisionWithTile(tx, (int) (position.getY() + bounds.y) / Tile.HEIGHT) &&
-					!collisionWithTile(tx, (int) (position.getY() + bounds.y + bounds.height) / Tile.HEIGHT)) {
+			int tx = (int) (position.getX() + movement.getX() + bounds.x + bounds.width) / Constants.TILE_WIDTH;
+			if(!collisionWithTile(tx, (int) (position.getY() + bounds.y) / Constants.TILE_HEIGHT) &&
+					!collisionWithTile(tx, (int) (position.getY() + bounds.y + bounds.height) / Constants.TILE_HEIGHT)) {
 				position.addX(movement.getX());
 			} else {
-				position.setX(tx * Tile.WIDTH - bounds.x - bounds.width - 1);
+				position.setX(tx * Constants.TILE_WIDTH - bounds.x - bounds.width - 1);
 			}
 		}
 		// Moving left
 		else if(movement.getX() < 0) {
-			int tx = (int) (position.getX() + movement.getX() + bounds.x) / Tile.WIDTH;
-			if(!collisionWithTile(tx, (int) (position.getY() + bounds.y) / Tile.HEIGHT) &&
-					!collisionWithTile(tx, (int) (position.getY() + bounds.y + bounds.height) / Tile.HEIGHT)) {
+			int tx = (int) (position.getX() + movement.getX() + bounds.x) / Constants.TILE_WIDTH;
+			if(!collisionWithTile(tx, (int) (position.getY() + bounds.y) / Constants.TILE_HEIGHT) &&
+					!collisionWithTile(tx, (int) (position.getY() + bounds.y + bounds.height) / Constants.TILE_HEIGHT)) {
 				position.addX(movement.getX());
 			} else {
-				position.setX(tx * Tile.WIDTH + Tile.WIDTH - bounds.x);
+				position.setX(tx * Constants.TILE_WIDTH + Constants.TILE_WIDTH - bounds.x);
 			}
 		}
 	}
@@ -54,22 +51,22 @@ public abstract class Creature extends Entity {
 	public void moveY() {
 		// Moving down
 		if(movement.getY() > 0) {
-			int ty = (int) (position.getY() + movement.getY() + bounds.y + bounds.height) / Tile.HEIGHT;
-			if(!collisionWithTile((int) (position.getX() + bounds.x) / Tile.WIDTH, ty) &&
-			!collisionWithTile((int) (position.getX() + bounds.x + bounds.width) / Tile.WIDTH, ty)) {
+			int ty = (int) (position.getY() + movement.getY() + bounds.y + bounds.height) / Constants.TILE_HEIGHT;
+			if(!collisionWithTile((int) (position.getX() + bounds.x) / Constants.TILE_WIDTH, ty) &&
+			!collisionWithTile((int) (position.getX() + bounds.x + bounds.width) / Constants.TILE_WIDTH, ty)) {
 				position.addY(movement.getY());
 			} else {
-				position.setY(ty * Tile.HEIGHT - bounds.y - bounds.height - 1);
+				position.setY(ty * Constants.TILE_HEIGHT - bounds.y - bounds.height - 1);
 			}
 		} 
 		// Moving up
 		else if(movement.getY() < 0) {
-			int ty = (int) (position.getY() + movement.getY() + bounds.y) / Tile.HEIGHT;
-			if(!collisionWithTile((int) (position.getX() + bounds.x) / Tile.WIDTH, ty) &&
-			!collisionWithTile((int) (position.getX() + bounds.x + bounds.width) / Tile.WIDTH, ty)) {
+			int ty = (int) (position.getY() + movement.getY() + bounds.y) / Constants.TILE_HEIGHT;
+			if(!collisionWithTile((int) (position.getX() + bounds.x) / Constants.TILE_WIDTH, ty) &&
+			!collisionWithTile((int) (position.getX() + bounds.x + bounds.width) / Constants.TILE_WIDTH, ty)) {
 				position.addY(movement.getY());
 			} else {
-				position.setY(ty * Tile.HEIGHT + Tile.HEIGHT - bounds.y);
+				position.setY(ty * Constants.TILE_HEIGHT + Constants.TILE_HEIGHT - bounds.y);
 			}
 		}
 	}
@@ -100,6 +97,10 @@ public abstract class Creature extends Entity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+	
+	public void render(Graphics g) {
+		super.render(g);
 	}
 
 }

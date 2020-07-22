@@ -1,9 +1,11 @@
 package ca.bc.southridge.ccc.game2d.entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import ca.bc.southridge.ccc.game2d.Handler;
+import ca.bc.southridge.ccc.game2d.utils.Constants;
 import ca.bc.southridge.ccc.game2d.utils.Vector;
 
 public abstract class Entity {
@@ -49,6 +51,13 @@ public abstract class Entity {
 
 	public abstract void tick();
 	
-	public abstract void render(Graphics g);
+	public void render(Graphics g) {
+		if(Constants.DEBUG) {
+			g.setColor(Color.red);
+			g.drawRect((int) (position.getX() + bounds.x - handler.getGameCamera().getxOffset()),
+					(int) (position.getY() + bounds.y - handler.getGameCamera().getyOffset()), bounds.width,
+					bounds.height);
+		}
+	}
 
 }
