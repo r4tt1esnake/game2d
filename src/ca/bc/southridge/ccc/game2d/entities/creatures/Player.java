@@ -1,6 +1,5 @@
 package ca.bc.southridge.ccc.game2d.entities.creatures;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 

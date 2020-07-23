@@ -59,5 +59,22 @@ public abstract class Entity {
 					bounds.height);
 		}
 	}
+	
+	// The offset is there so that we can get check collisions previous to when the entity actually collides
+	public boolean checkEntityCollisions(float xOffset, float yOffset) {
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+			// Skips self-collision
+			if(e.equals(this))
+				continue;
+			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
+				return true;
+		}
+		return false;
+	}
+	
+	// Returns the collision box of the entity
+	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+		return new Rectangle((int) (position.getX() + bounds.x + xOffset), (int) (position.getY() + bounds.y + yOffset), bounds.width, bounds.height);
+	}
 
 }
