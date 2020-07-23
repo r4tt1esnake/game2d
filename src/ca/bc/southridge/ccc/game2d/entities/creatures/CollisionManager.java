@@ -14,11 +14,18 @@ public class CollisionManager {
 	private Rectangle colBox;
 	private Rectangle hitBox;
 	
+	// Collision-state savers
+	boolean entityTestX, entityTestY, tileTestX, tileTestY;
+	
 	public CollisionManager(Handler handler, Creature c, Rectangle colBox, Rectangle hitBox) {
 		this.handler = handler;
 		this.c = c;
 		this.colBox = colBox;
 		this.hitBox = hitBox;
+		entityTestX = true;
+		entityTestY = true;
+		tileTestX = true;
+		tileTestY = true;
 	}
 	
 	// TILE COLLISIONS
@@ -52,17 +59,17 @@ public class CollisionManager {
 		Vector position = c.getPosition();
 		Vector movement = c.getMovement();
 		
-		boolean entityTest = !checkEntityCollisions(movement.getX(), 0f);
-		boolean tileTest = true;
+		entityTestX = !checkEntityCollisions(movement.getX(), 0f);
+		tileTestX = true;
 		
 		// Moving right
 		if(movement.getX() > 0) {
 			int tx = (int) (position.getX() + movement.getX() + colBox.x + colBox.width) / Constants.TILE_WIDTH;
 			if(!collisionWithTile(tx, (int) (position.getY() + colBox.y) / Constants.TILE_HEIGHT) &&
 					!collisionWithTile(tx, (int) (position.getY() + colBox.y + colBox.height) / Constants.TILE_HEIGHT)) {
-				tileTest = true;
+				tileTestX = true;
 			} else {
-				tileTest = false;
+				tileTestX = false;
 			}
 		}
 		
@@ -71,30 +78,30 @@ public class CollisionManager {
 			int tx = (int) (position.getX() + movement.getX() + colBox.x) / Constants.TILE_WIDTH;
 			if(!collisionWithTile(tx, (int) (position.getY() + colBox.y) / Constants.TILE_HEIGHT) &&
 					!collisionWithTile(tx, (int) (position.getY() + colBox.y + colBox.height) / Constants.TILE_HEIGHT)) {
-				tileTest = true;
+				tileTestX = true;
 			} else {
-				tileTest = false;
+				tileTestX = false;
 			}
 		}
 		
-		return entityTest && tileTest;
+		return entityTestX && tileTestX;
 	}
 	
 	public boolean canMoveY() {
 		Vector position = c.getPosition();
 		Vector movement = c.getMovement();
 		
-		boolean entityTest = !checkEntityCollisions(0f, movement.getY());
-		boolean tileTest = true;
+		entityTestY = !checkEntityCollisions(0f, movement.getY());
+		tileTestY = true;
 		
 		// Moving down
 		if(movement.getY() > 0) {
 			int ty = (int) (position.getY() + movement.getY() + colBox.y + colBox.height) / Constants.TILE_HEIGHT;
 			if(!collisionWithTile((int) (position.getX() + colBox.x) / Constants.TILE_WIDTH, ty) &&
 			!collisionWithTile((int) (position.getX() + colBox.x + colBox.width) / Constants.TILE_WIDTH, ty)) {
-				tileTest = true;
+				tileTestY = true;
 			} else {
-				tileTest = false;
+				tileTestY = false;
 			}
 		} 
 		
@@ -103,13 +110,44 @@ public class CollisionManager {
 			int ty = (int) (position.getY() + movement.getY() + colBox.y) / Constants.TILE_HEIGHT;
 			if(!collisionWithTile((int) (position.getX() + colBox.x) / Constants.TILE_WIDTH, ty) &&
 			!collisionWithTile((int) (position.getX() + colBox.x + colBox.width) / Constants.TILE_WIDTH, ty)) {
-				tileTest = true;
+				tileTestY = true;
 			} else {
-				tileTest = false;
+				tileTestY = false;
 			}
 		}
 		
-		return entityTest && tileTest;
+		return entityTestY && tileTestY;
+	}
+	
+	public static enum CollisionBoxType {
+		TILE,
+		ENTITY,
+		TILE_AND_ENTITY,
+		NONE
+	}
+	
+	public CollisionBoxType getXCollisionBoxType() {
+		if(!tileTestX) {
+			if(!entityTestX)
+				return CollisionBoxType.TILE_AND_ENTITY;
+			return CollisionBoxType.TILE;
+		}
+		else if(!entityTestX)
+			return CollisionBoxType.ENTITY;
+		else
+			return CollisionBoxType.NONE;
+	}
+	
+	public CollisionBoxType getYCollisionBoxType() {
+		if(!tileTestY) {
+			if(!entityTestY)
+				return CollisionBoxType.TILE_AND_ENTITY;
+			return CollisionBoxType.TILE;
+		}
+		else if(!entityTestY)
+			return CollisionBoxType.ENTITY;
+		else
+			return CollisionBoxType.NONE;
 	}
 
 }

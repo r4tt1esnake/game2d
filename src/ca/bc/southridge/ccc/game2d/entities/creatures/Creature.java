@@ -28,19 +28,23 @@ public abstract class Creature extends Entity {
 			position.addX(movement.getX());
 		else {
 			int tx = (int) (position.getX() + movement.getX() + bounds.x + bounds.width) / Constants.TILE_WIDTH;
-			if(movement.getX() > 0)
-				position.setX(tx * Constants.TILE_WIDTH - bounds.x - bounds.width - 1);
-			else if(movement.getX() < 0)
-				position.setX((tx - 1) * Constants.TILE_WIDTH + Constants.TILE_WIDTH - bounds.x);
+			if(cm.getXCollisionBoxType() == CollisionManager.CollisionBoxType.TILE) {
+				if (movement.getX() > 0)
+					position.setX(tx * Constants.TILE_WIDTH - bounds.x - bounds.width - 1);
+				else if (movement.getX() < 0)
+					position.setX((tx - 1) * Constants.TILE_WIDTH + Constants.TILE_WIDTH - bounds.x);
+			}
 		}
 		if(cm.canMoveY())
 			position.addY(movement.getY());
 		else {
 			int ty = (int) (position.getY() + movement.getY() + bounds.y + bounds.height) / Constants.TILE_HEIGHT;
-			if(movement.getY() > 0)
-				position.setY(ty * Constants.TILE_HEIGHT - bounds.y - bounds.height - 1);
-			else if(movement.getY() < 0)
-				position.setY((ty - 1) * Constants.TILE_HEIGHT + Constants.TILE_HEIGHT - bounds.y);
+			if(cm.getYCollisionBoxType() == CollisionManager.CollisionBoxType.TILE) {
+				if (movement.getY() > 0)
+					position.setY(ty * Constants.TILE_HEIGHT - bounds.y - bounds.height - 1);
+				else if (movement.getY() < 0)
+					position.setY((ty - 1) * Constants.TILE_HEIGHT + Constants.TILE_HEIGHT - bounds.y);
+			}
 		}
 	}
 	

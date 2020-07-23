@@ -6,7 +6,7 @@ public final class Constants {
 	
 	// Fundamental
 	public static final int GAME_FPS = 60;
-	public static final double SCALE = 6;
+	public static final double SCALE = 4;
 	public static final int UNIT = (int) (CELL_SIDE * SCALE);
 	
 	// Window

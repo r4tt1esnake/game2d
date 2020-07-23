@@ -1,10 +1,7 @@
 package ca.bc.southridge.ccc.game2d;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.image.BufferStrategy;
 
 import ca.bc.southridge.ccc.game2d.display.Display;

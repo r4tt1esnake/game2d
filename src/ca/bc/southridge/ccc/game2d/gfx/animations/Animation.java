@@ -1,4 +1,4 @@
-package ca.bc.southridge.ccc.game2d.gfx;
+package ca.bc.southridge.ccc.game2d.gfx.animations;
 
 import java.awt.image.BufferedImage;
 
@@ -10,6 +10,7 @@ public class Animation {
 	
 	// Provide an array with its elements the indices of frames in order to loop custom animations.
 	private int[] sequence;
+	// Individual FPS speed of each frame in the sequence
 	private int[] speed;
 	
 	public Animation(double FPS, BufferedImage[] frames) {
