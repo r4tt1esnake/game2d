@@ -6,15 +6,14 @@ import java.awt.Rectangle;
 
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
-import ca.bc.southridge.ccc.game2d.utils.Vector;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public abstract class Entity {
 	
+	protected int width, height, ID;
 	protected Handler handler;
-	// Float is used here to ensure smooth movement.
 	protected Vector position;
-	protected int width, height;
-	protected Rectangle bounds;
+	protected Rectangle colBox, hitBox;
 	
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;
@@ -22,7 +21,8 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		
-		bounds = new Rectangle(0, 0, width, height);
+		colBox = new Rectangle(0, 0, 0, 0);
+		hitBox = new Rectangle(0, 0, 0, 0);
 	}
 	
 	public Vector getPosition() {
@@ -48,33 +48,52 @@ public abstract class Entity {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	
+	public int getID() {
+		return ID;
+	}
 
 	public abstract void tick();
 	
 	public void render(Graphics g) {
-		if(Constants.DEBUG) {
+		if(Constants.SHOW_COLLISION_BOXES) {
 			g.setColor(Color.red);
-			g.drawRect((int) (position.getX() + bounds.x - handler.getGameCamera().getxOffset()),
-					(int) (position.getY() + bounds.y - handler.getGameCamera().getyOffset()), bounds.width,
-					bounds.height);
+			g.drawRect((int) (position.getX() + colBox.x - handler.getGameCamera().getxOffset()),
+					(int) (position.getY() + colBox.y - handler.getGameCamera().getyOffset()), colBox.width, colBox.height);
+		}
+					
+		if(Constants.SHOW_HITBOXES) {
+			g.setColor(Color.blue);
+			g.drawRect((int) (position.getX() + hitBox.getX() - handler.getGameCamera().getxOffset()),
+					(int) (position.getY() + hitBox.getY() - handler.getGameCamera().getyOffset()),
+					(int) hitBox.getWidth(), (int) hitBox.getHeight());
 		}
 	}
 	
-	// The offset is there so that we can get check collisions previous to when the entity actually collides
-	public boolean checkEntityCollisions(float xOffset, float yOffset) {
-		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
-			// Skips self-collision
-			if(e.equals(this))
-				continue;
-			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
-				return true;
-		}
-		return false;
+	public boolean getManaged() {
+		if(ID == -1)
+			return false;
+		return true;
+	}
+	
+	public void unmanage() {
+		ID = -1;
 	}
 	
 	// Returns the collision box of the entity
-	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-		return new Rectangle((int) (position.getX() + bounds.x + xOffset), (int) (position.getY() + bounds.y + yOffset), bounds.width, bounds.height);
+	public Rectangle getColBox(float xOffset, float yOffset) {
+		return new Rectangle((int) (position.getX() + colBox.x + xOffset),
+				(int) (position.getY() + colBox.y + yOffset), colBox.width, colBox.height);
+	}
+	
+	// Returns the hit box of the entity
+	public Rectangle getHitBox(float xOffset, float yOffset) {
+		return new Rectangle((int) (position.getX() + hitBox.x + xOffset),
+				(int) (position.getY() + hitBox.y + yOffset), hitBox.width, hitBox.height);
 	}
 
 }

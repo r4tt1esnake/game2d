@@ -2,9 +2,9 @@ package ca.bc.southridge.ccc.game2d.gfx.animations;
 
 import java.awt.image.BufferedImage;
 
-import ca.bc.southridge.ccc.game2d.entities.creatures.Player;
+import ca.bc.southridge.ccc.game2d.entities.dynamics.Player;
 import ca.bc.southridge.ccc.game2d.utils.MathLib;
-import ca.bc.southridge.ccc.game2d.utils.Vector;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public class AnimManager_Player extends AnimManager {
 	

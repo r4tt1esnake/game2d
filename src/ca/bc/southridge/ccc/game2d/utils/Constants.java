@@ -25,6 +25,10 @@ public final class Constants {
 	public static final float CREATURE_SPEED = 2.5f;
 	
 	// Debug
-	public static final boolean DEBUG = true;
+	public static final boolean SHOW_HITBOXES = false;
+	public static final boolean SHOW_COLLISION_BOXES = true;
+	public static final boolean OUTPUT_FPS = false;
+	public static final boolean SHOW_COLLISION_REGIONS = true;
+	public static final boolean SHOULD_USE_BAD_COLLISION = false;
 
 }

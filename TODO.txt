@@ -1,4 +1,9 @@
 2020/07/22
--	add class-specific animation classes
--	package collision detection into CollisionManager class
-	-	implement quadtree collision detection
+-	add class-specific animation classes	[x]
+-	package collision detection into CollisionManager class	[x]
+	-	implement quadtree collision detection	
+	
+2020/07/23
+-	package collision and hitboxes into one class
+	-	implement high, mid, and low hitboxes
+

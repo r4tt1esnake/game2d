@@ -8,6 +8,7 @@ import ca.bc.southridge.ccc.game2d.display.Display;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 import ca.bc.southridge.ccc.game2d.gfx.GameCamera;
 import ca.bc.southridge.ccc.game2d.input.KeyManager;
+import ca.bc.southridge.ccc.game2d.input.MouseManager;
 import ca.bc.southridge.ccc.game2d.states.GameState;
 import ca.bc.southridge.ccc.game2d.states.MenuState;
 import ca.bc.southridge.ccc.game2d.states.State;
@@ -30,6 +31,7 @@ public class Game implements Runnable {
 	
 	// Input
 	private KeyManager keyManager;
+	//private MouseManager mouseManager;
 	
 	// Camera
 	private GameCamera gameCamera;
@@ -40,12 +42,20 @@ public class Game implements Runnable {
 	public Game() {
 		running = false;
 		keyManager = new KeyManager();
+		//mouseManager = new MouseManager();
 	}
 	
 	private void init() {
 		Assets.init();
 		display = new Display(Constants.WINDOW_TITLE + " - Southridge CCC", Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		display.getFrame().addKeyListener(keyManager);
+		// Added to both to reduce glitches
+		/*
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		*/
 		
 		handler = new Handler(this);
 		gameCamera = new GameCamera(handler, 0, 0);
@@ -118,7 +128,7 @@ public class Game implements Runnable {
 			
 			// Our FPS counter. We can implement a graphical one in the future!
 			if(timer >= 1000000000) {
-				if(Constants.DEBUG)
+				if(Constants.OUTPUT_FPS)
 					System.out.println("Ticks and frames: " + ticks);
 				ticks = 0;
 				timer = 0;
@@ -129,6 +139,10 @@ public class Game implements Runnable {
 	public KeyManager getKeyManager() {
 		return keyManager;
 	}
+	/*
+	public MouseManager getMouseManager() {
+		return mouseManager;
+	}*/
 	
 	public GameCamera getGameCamera() {
 		return gameCamera;
@@ -151,6 +165,11 @@ public class Game implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// Deprecated
+	public Graphics getGraphics() {
+		return g;
 	}
 
 }

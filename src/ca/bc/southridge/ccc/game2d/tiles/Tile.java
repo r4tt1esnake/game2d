@@ -45,7 +45,7 @@ public class Tile {
 	
 	public void render(Graphics g, int x, int y) {
 		g.drawImage(texture, x, y, Constants.TILE_WIDTH, Constants.TILE_HEIGHT, null);
-		if(Constants.DEBUG) {
+		if(Constants.SHOW_COLLISION_BOXES) {
 			g.setColor(Color.red);
 			g.drawRect(x, y, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
 		}

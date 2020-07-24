@@ -1,18 +1,22 @@
-package ca.bc.southridge.ccc.game2d.entities.creatures;
+package ca.bc.southridge.ccc.game2d.entities.dynamics;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.Entity;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
-import ca.bc.southridge.ccc.game2d.utils.Vector;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.QuadTree;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public class CollisionManager {
 	
 	private Handler handler;
-	private Creature c;
+	private DynamicEntity c;
 	private Rectangle colBox;
 	private Rectangle hitBox;
+	private QuadTree colTree;
 	
 	// Collision-state savers
 	boolean entityTestX, entityTestY, tileTestX, tileTestY;
@@ -26,6 +30,7 @@ public class CollisionManager {
 		entityTestY = true;
 		tileTestX = true;
 		tileTestY = true;
+		colTree = handler.getWorld().getColTree();
 	}
 	
 	// TILE COLLISIONS
@@ -36,21 +41,43 @@ public class CollisionManager {
 	
 	// ENTITY COLLISIONS
 	
-	// Returns the collision box of the entity
-	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-		return new Rectangle((int) (c.getPosition().getX() + colBox.x + xOffset),
-				(int) (c.getPosition().getY() + colBox.y + yOffset), colBox.width, colBox.height);
-	}
-	
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
-		for(Entity i : handler.getWorld().getEntityManager().getEntities()) {
-			// Skips self-collision
-			if(i.equals(c))
-				continue;
-			if(i.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset)))
-				return true;
+		if(!Constants.SHOULD_USE_BAD_COLLISION) {
+			
+			// QuadTree collision (doesn't fucking work!!!!!!)
+			List<Rectangle> retObjs = new ArrayList<Rectangle>();
+			colTree.retrive(retObjs, c.getColBox(0, 0));
+			System.out.println("Num of potential colliders " + retObjs.size());
+			for(Rectangle i : retObjs) {
+				if(i.equals(c.getColBox(0, 0)))
+					continue;
+				
+				System.out.println("Player coords at " + c.getPosition().getX() + ", " + c.getPosition().getY());
+				System.out.println("Potential collision at " + i.x + ", " + i.y);
+		
+				if(i.intersects(c.getColBox(xOffset, yOffset))) {
+					System.out.println("Entity collision!");
+					return true;
+				}
+			}
+			return false;
+			
 		}
-		return false;
+		else {
+			
+			// Bad collision
+			for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+				if(e.equals((Entity) c))
+					continue;
+		
+				if(e.getColBox(0, 0).intersects(c.getColBox(xOffset, yOffset))) {
+					return true;
+				}
+			}
+			return false;
+			
+		}
+			
 	}
 	
 	// TOTAL COLLISIONS
@@ -83,7 +110,6 @@ public class CollisionManager {
 				tileTestX = false;
 			}
 		}
-		
 		return entityTestX && tileTestX;
 	}
 	
@@ -115,7 +141,6 @@ public class CollisionManager {
 				tileTestY = false;
 			}
 		}
-		
 		return entityTestY && tileTestY;
 	}
 	

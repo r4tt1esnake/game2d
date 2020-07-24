@@ -1,14 +1,13 @@
-package ca.bc.southridge.ccc.game2d.entities.creatures;
+package ca.bc.southridge.ccc.game2d.entities.dynamics;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import ca.bc.southridge.ccc.game2d.Handler;
+import ca.bc.southridge.ccc.game2d.entities.statics.Tree;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 import ca.bc.southridge.ccc.game2d.gfx.animations.AnimManager_Player;
 import ca.bc.southridge.ccc.game2d.gfx.animations.Animation;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
-import ca.bc.southridge.ccc.game2d.utils.MathLib;
 
 public class Player extends Creature {
 	
@@ -19,17 +18,22 @@ public class Player extends Creature {
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Constants.CREATURE_WIDTH, Constants.CREATURE_HEIGHT);
 		
-		bounds.x = width / 3;
-		bounds.y = height / 2;
-		bounds.width = width / 3;
-		bounds.height = height / 2;
+		colBox.x = width / 4;
+		colBox.y = 15 * height / 16;
+		colBox.width = width / 2;
+		colBox.height = height / 16;
+		
+		hitBox.x = width / 4;
+		hitBox.y = height / 5;
+		hitBox.width = width / 2;
+		hitBox.height = 4 * height / 5;
 		
 		int[] animDownSeq = new int[]{0, 1, 0, 2};
 		int[] animUpSeq = new int[]{0, 1, 0, 2};
 		int[] animRightSeq = new int[]{0, 1, 0, 2};
 		int[] animLeftSeq = new int[]{0, 1, 0, 2};
 		
-		double[] movAnimSeqFPS = new double[] {10, 4, 10, 4};
+		double[] movAnimSeqFPS = new double[] {10, 4.5, 10, 4.5};
 		
 		animDown = new Animation(movAnimSeqFPS, Assets.player_down, animDownSeq);
 		animUp = new Animation(movAnimSeqFPS, Assets.player_up, animUpSeq);
@@ -57,7 +61,6 @@ public class Player extends Creature {
 	@Override
 	public void tick() {
 		am_P.tick();
-		
 		getInput();
 		move();
 		handler.getGameCamera().lock(this);
@@ -78,6 +81,12 @@ public class Player extends Creature {
 			movement.addX(speed);
 		}
 		movement.normalize(speed);
+		
+		if(handler.getKeyManager().key_c) {
+		}
+		
+		if(handler.getKeyManager().key_v) {
+		}
 	}
 
 	@Override

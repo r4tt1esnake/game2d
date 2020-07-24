@@ -1,4 +1,6 @@
-package ca.bc.southridge.ccc.game2d.utils;
+package ca.bc.southridge.ccc.game2d.utils.datastructures;
+
+import ca.bc.southridge.ccc.game2d.utils.MathLib;
 
 public class Vector {
 	

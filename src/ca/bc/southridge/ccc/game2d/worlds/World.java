@@ -1,15 +1,17 @@
 package ca.bc.southridge.ccc.game2d.worlds;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.EntityManager;
-import ca.bc.southridge.ccc.game2d.entities.creatures.Player;
+import ca.bc.southridge.ccc.game2d.entities.dynamics.Player;
 import ca.bc.southridge.ccc.game2d.entities.statics.Tree;
 import ca.bc.southridge.ccc.game2d.tiles.Tile;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
 import ca.bc.southridge.ccc.game2d.utils.Utils;
-import ca.bc.southridge.ccc.game2d.utils.Vector;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.QuadTree;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public class World {
 	
@@ -18,18 +20,25 @@ public class World {
 	private Vector spawn; // This is also in terms of tiles.
 	private int[][] tiles; // In the format of (x, y);
 	
+	private QuadTree colTree;
+	
 	private EntityManager entityManager;
 
 	public World(Handler handler, String path) {
 		this.handler = handler;
-		entityManager = new EntityManager(handler, new Player(handler, 0, 0));
 		
 		loadWorld(path);
+		
+		handler.setWorld(this);
+		
+		colTree = new QuadTree(0, new Rectangle(0, 0, width * Constants.TILE_WIDTH, height * Constants.TILE_HEIGHT));	
+		
+		entityManager = new EntityManager(handler, new Player(handler, 0, 0));
 		
 		entityManager.getPlayer().getPosition().setX(spawn.getX() * Constants.TILE_WIDTH);
 		entityManager.getPlayer().getPosition().setY(spawn.getY() * Constants.TILE_HEIGHT);
 		
-		entityManager.addEntity(new Tree(handler, 3 * Constants.TILE_WIDTH, 3 * Constants.TILE_HEIGHT));
+		entityManager.addEntity(new Tree(handler, (int)(2.5 * Constants.TILE_WIDTH), 3 * Constants.TILE_HEIGHT));
 	}
 	
 	public void tick() {
@@ -50,6 +59,9 @@ public class World {
 		}
 		
 		entityManager.render(g);
+		
+		if(Constants.SHOW_COLLISION_REGIONS)
+			colTree.render(g);
 	}
 	
 	public Tile getTile(int x, int y) {
@@ -92,6 +104,14 @@ public class World {
 	
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+	
+	public QuadTree getColTree() {
+		return colTree;
+	}
+	
+	public void setColTree(QuadTree q) {
+		colTree = q;
 	}
 
 }
