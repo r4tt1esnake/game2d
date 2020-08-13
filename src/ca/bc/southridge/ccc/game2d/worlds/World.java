@@ -6,11 +6,13 @@ import java.awt.Rectangle;
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.EntityManager;
 import ca.bc.southridge.ccc.game2d.entities.dynamics.Player;
+import ca.bc.southridge.ccc.game2d.entities.statics.Rock;
 import ca.bc.southridge.ccc.game2d.entities.statics.Tree;
 import ca.bc.southridge.ccc.game2d.tiles.Tile;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
 import ca.bc.southridge.ccc.game2d.utils.Utils;
 import ca.bc.southridge.ccc.game2d.utils.datastructures.QuadTree;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Scaler;
 import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public class World {
@@ -33,12 +35,13 @@ public class World {
 		
 		colTree = new QuadTree(0, new Rectangle(0, 0, width * Constants.TILE_WIDTH, height * Constants.TILE_HEIGHT));	
 		
-		entityManager = new EntityManager(handler, new Player(handler, 0, 0));
+		entityManager = new EntityManager(handler, new Player(handler, new Scaler(spawn.getX(), spawn.getY(), 1, 1)));
 		
 		entityManager.getPlayer().getPosition().setX(spawn.getX() * Constants.TILE_WIDTH);
 		entityManager.getPlayer().getPosition().setY(spawn.getY() * Constants.TILE_HEIGHT);
 		
-		entityManager.addEntity(new Tree(handler, (int)(2.5 * Constants.TILE_WIDTH), 3 * Constants.TILE_HEIGHT));
+		entityManager.addEntity(new Tree(handler, new Scaler((float) (2 * Constants.TILE_WIDTH), (float) (3.2 * Constants.TILE_HEIGHT), 1, 1)));
+		entityManager.addEntity(new Rock(handler, new Scaler(5 * Constants.TILE_WIDTH, 3 * Constants.TILE_HEIGHT, 1, 1)));
 	}
 	
 	public void tick() {

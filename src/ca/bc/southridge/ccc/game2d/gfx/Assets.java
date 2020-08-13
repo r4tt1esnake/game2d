@@ -7,17 +7,35 @@ import ca.bc.southridge.ccc.game2d.utils.Constants;
 public class Assets {
 	
 	// Load all separate images from spritesheets here!
+	
+	// Tiles with no animations
 	public static BufferedImage icon, grass, grass_pebble, grass_flowers, 
 	dirtpath_v, dirtpath_c, dirtpath_h, dirtpath_v_t_u, dirtpath_v_t_d, dirtpath_h_t_r, dirtpath_h_t_l,
-	water_v, water_c, water_h, water_v_t_u, water_v_t_d, water_h_t_r, water_h_t_l,
-	tree;
+	water_v, water_c, water_h, water_v_t_u, water_v_t_d, water_h_t_r, water_h_t_l, stone_bricks;
 	
+	// Entities with no animations
+	public static BufferedImage rock, tree;
+	
+	// Entities with animations
 	public static BufferedImage[] player_down, player_up, player_left, player_right,
 	player_down_idle, player_up_idle, player_left_idle, player_right_idle;
 	
+	// UI with no animations
+	
+	// UI with animations
+	public static BufferedImage[] btn_resume;
+	
 	public static void init() {
 		icon = ImageLoader.loadImage("/textures/face.png");
-		tree = ImageLoader.loadImage("/textures/face.png");
+		
+		SpriteSheet UISheet = new SpriteSheet(ImageLoader.loadImage("/textures/UI.png"));
+		
+		btn_resume = new BufferedImage[2];
+		for(int i = 0; i < 2; i++) {
+			btn_resume[i] = UISheet.crop(0 + Constants.CELL_SIDE * 2 * i, 0, Constants.CELL_SIDE * 2, Constants.CELL_SIDE);
+		}
+		
+		stone_bricks = UISheet.crop(Constants.CELL_SIDE * 4, 0, Constants.CELL_SIDE, Constants.CELL_SIDE);
 		
 		SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/textures/village_girl.png"));
 		
@@ -67,6 +85,11 @@ public class Assets {
 		water_v_t_d = tileSheet.crop(Constants.CELL_SIDE * 14, 0, Constants.CELL_SIDE, Constants.CELL_SIDE);
 		water_h_t_r = tileSheet.crop(Constants.CELL_SIDE * 15, 0, Constants.CELL_SIDE, Constants.CELL_SIDE);
 		water_h_t_l = tileSheet.crop(Constants.CELL_SIDE * Constants.CELL_SIDE, 0, Constants.CELL_SIDE, Constants.CELL_SIDE);
+		
+		SpriteSheet sEntitySheet = new SpriteSheet(ImageLoader.loadImage("/textures/static_entities.png"));
+		
+		rock = sEntitySheet.crop(0, 0, Constants.CELL_SIDE, Constants.CELL_SIDE);
+		tree = sEntitySheet.crop(Constants.CELL_SIDE, 0, Constants.CELL_SIDE * 2, Constants.CELL_SIDE * 3);
 	}
 
 }

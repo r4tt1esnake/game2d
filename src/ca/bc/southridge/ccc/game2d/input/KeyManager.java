@@ -8,7 +8,7 @@ public class KeyManager implements KeyListener {
 	private boolean[] keys;
 	// Cardinal direction keys.
 	public boolean up, down, left, right,
-	key_c, key_v;
+	key_c, key_v, key_esc;
 	
 	public KeyManager() {
 		// Each separate index corresponds to an ASCII value.
@@ -24,6 +24,7 @@ public class KeyManager implements KeyListener {
 		right = keys[KeyEvent.VK_D];
 		key_c = keys[KeyEvent.VK_C];
 		key_v = keys[KeyEvent.VK_V];
+		key_esc = keys[KeyEvent.VK_ESCAPE];
 	}
 
 	@Override

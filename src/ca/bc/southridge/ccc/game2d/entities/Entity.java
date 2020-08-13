@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Scaler;
 import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public abstract class Entity {
@@ -15,11 +16,11 @@ public abstract class Entity {
 	protected Vector position;
 	protected Rectangle colBox, hitBox;
 	
-	public Entity(Handler handler, float x, float y, int width, int height) {
+	public Entity(Handler handler, Scaler s) {
 		this.handler = handler;
-		position = new Vector(x, y);
-		this.width = width;
-		this.height = height;
+		position = new Vector(s.getX(), s.getY());
+		this.width = (int) (0 * s.getxScale());
+		this.height = (int) (0 * s.getyScale());
 		
 		colBox = new Rectangle(0, 0, 0, 0);
 		hitBox = new Rectangle(0, 0, 0, 0);

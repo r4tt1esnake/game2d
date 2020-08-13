@@ -4,7 +4,6 @@ import ca.bc.southridge.ccc.game2d.gfx.GameCamera;
 import ca.bc.southridge.ccc.game2d.input.KeyManager;
 import ca.bc.southridge.ccc.game2d.input.MouseManager;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
-import ca.bc.southridge.ccc.game2d.utils.datastructures.QuadTree;
 import ca.bc.southridge.ccc.game2d.worlds.World;
 
 public class Handler {
@@ -23,10 +22,10 @@ public class Handler {
 	public KeyManager getKeyManager() {
 		return game.getKeyManager();
 	}
-	/*
+	
 	public MouseManager getMouseManager() {
 		return game.getMouseManager();
-	}*/
+	}
 	
 	public int getWidth() {
 		return Constants.WINDOW_WIDTH;

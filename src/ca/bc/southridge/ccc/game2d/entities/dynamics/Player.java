@@ -3,11 +3,10 @@ package ca.bc.southridge.ccc.game2d.entities.dynamics;
 import java.awt.Graphics;
 
 import ca.bc.southridge.ccc.game2d.Handler;
-import ca.bc.southridge.ccc.game2d.entities.statics.Tree;
 import ca.bc.southridge.ccc.game2d.gfx.Assets;
 import ca.bc.southridge.ccc.game2d.gfx.animations.AnimManager_Player;
 import ca.bc.southridge.ccc.game2d.gfx.animations.Animation;
-import ca.bc.southridge.ccc.game2d.utils.Constants;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Scaler;
 
 public class Player extends Creature {
 	
@@ -15,8 +14,8 @@ public class Player extends Creature {
 	animDownIdle, animUpIdle, animRightIdle, animLeftIdle;
 	private AnimManager_Player am_P;
 
-	public Player(Handler handler, float x, float y) {
-		super(handler, x, y, Constants.CREATURE_WIDTH, Constants.CREATURE_HEIGHT);
+	public Player(Handler handler, Scaler s) {
+		super(handler, s);
 		
 		colBox.x = width / 4;
 		colBox.y = 15 * height / 16;
@@ -68,16 +67,16 @@ public class Player extends Creature {
 	
 	private void getInput() {
 		movement.zero();
-		if(handler.getKeyManager().up == true) {
+		if(handler.getKeyManager().up) {
 			movement.addY(-speed);
 		}
-		if(handler.getKeyManager().down == true) {
+		if(handler.getKeyManager().down) {
 			movement.addY(speed);
 		}
-		if(handler.getKeyManager().left == true) {
+		if(handler.getKeyManager().left) {
 			movement.addX(-speed);
 		}
-		if(handler.getKeyManager().right == true) {
+		if(handler.getKeyManager().right) {
 			movement.addX(speed);
 		}
 		movement.normalize(speed);
@@ -87,6 +86,7 @@ public class Player extends Creature {
 		
 		if(handler.getKeyManager().key_v) {
 		}
+		
 	}
 
 	@Override

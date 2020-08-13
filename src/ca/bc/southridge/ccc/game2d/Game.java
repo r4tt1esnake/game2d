@@ -31,7 +31,7 @@ public class Game implements Runnable {
 	
 	// Input
 	private KeyManager keyManager;
-	//private MouseManager mouseManager;
+	private MouseManager mouseManager;
 	
 	// Camera
 	private GameCamera gameCamera;
@@ -42,7 +42,7 @@ public class Game implements Runnable {
 	public Game() {
 		running = false;
 		keyManager = new KeyManager();
-		//mouseManager = new MouseManager();
+		mouseManager = new MouseManager();
 	}
 	
 	private void init() {
@@ -50,12 +50,10 @@ public class Game implements Runnable {
 		display = new Display(Constants.WINDOW_TITLE + " - Southridge CCC", Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		display.getFrame().addKeyListener(keyManager);
 		// Added to both to reduce glitches
-		/*
 		display.getFrame().addMouseListener(mouseManager);
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
-		*/
 		
 		handler = new Handler(this);
 		gameCamera = new GameCamera(handler, 0, 0);
@@ -136,18 +134,6 @@ public class Game implements Runnable {
 		}
 	}
 	
-	public KeyManager getKeyManager() {
-		return keyManager;
-	}
-	/*
-	public MouseManager getMouseManager() {
-		return mouseManager;
-	}*/
-	
-	public GameCamera getGameCamera() {
-		return gameCamera;
-	}
-	
 	public synchronized void start() {
 		if(running)
 			return;
@@ -167,6 +153,35 @@ public class Game implements Runnable {
 		}
 	}
 	
+	
+	public KeyManager getKeyManager() {
+		return keyManager;
+	}
+
+	public MouseManager getMouseManager() {
+		return mouseManager;
+	}
+	
+	public GameCamera getGameCamera() {
+		return gameCamera;
+	}
+	
+	public State getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(State gameState) {
+		this.gameState = gameState;
+	}
+
+	public State getMenuState() {
+		return menuState;
+	}
+
+	public void setMenuState(State menuState) {
+		this.menuState = menuState;
+	}
+
 	// Deprecated
 	public Graphics getGraphics() {
 		return g;

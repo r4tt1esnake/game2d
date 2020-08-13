@@ -3,6 +3,7 @@ package ca.bc.southridge.ccc.game2d.entities.dynamics;
 import ca.bc.southridge.ccc.game2d.Handler;
 import ca.bc.southridge.ccc.game2d.entities.Entity;
 import ca.bc.southridge.ccc.game2d.utils.Constants;
+import ca.bc.southridge.ccc.game2d.utils.datastructures.Scaler;
 import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public abstract class DynamicEntity extends Entity {
@@ -11,8 +12,8 @@ public abstract class DynamicEntity extends Entity {
 	protected Vector movement;
 	protected CollisionManager cm;
 	
-	public DynamicEntity(Handler handler, float x, float y, int width, int height) {
-		super(handler, x, y, width, height);
+	public DynamicEntity(Handler handler, Scaler s) {
+		super(handler, s);
 	}
 	
 	public void move() {

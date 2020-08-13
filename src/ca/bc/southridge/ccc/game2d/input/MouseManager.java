@@ -4,15 +4,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import ca.bc.southridge.ccc.game2d.input.MousePacket.EventType;
 import ca.bc.southridge.ccc.game2d.utils.datastructures.Vector;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
 	
 	private boolean lPressed, rPressed;
 	private Vector pos;
+	private MousePacket mp;
 	
 	public MouseManager() {
-		
+		pos = new Vector(0, 0);
+		mp = new MousePacket(null, null);
 	}
 	
 	public boolean leftPressed() {
@@ -36,6 +39,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		pos.setX(e.getX());
 		pos.setY(e.getY());
+		mp.setMouseEvent(e);
+		mp.setEventType(EventType.MOVED);
 	}
 
 	@Override
@@ -62,7 +67,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 			lPressed = true;
 		if(e.getButton() == MouseEvent.BUTTON3)
 			rPressed = true;
-		
+
+		mp.setMouseEvent(e);
+		mp.setEventType(EventType.PRESSED);
 	}
 
 	@Override
@@ -72,6 +79,12 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 		if(e.getButton() == MouseEvent.BUTTON3)
 			rPressed = false;
 		
+		mp.setMouseEvent(e);
+		mp.setEventType(EventType.RELEASED);
+	}
+	
+	public MousePacket poll() {
+		return mp;
 	}
 
 }
